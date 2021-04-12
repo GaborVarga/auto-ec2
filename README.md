@@ -10,10 +10,10 @@ What you will need:
 
 How to run:
 
-./createinstance name_of_the_instance instance_type availability_zone key_name security_group_name ebs_volume_size ebs_volume_name vpc_id subnet_id
+./createinstance.sh name_of_the_instance instance_type availability_zone key_name security_group_name ebs_volume_size ebs_volume_name vpc_id subnet_id
 
 Example: 
 
-./createinstance myinstance r5.large eu-west-1 mykey mysecuritygroup 64 myvolume vpc-1111111111111 subnet-1111111
+./createinstance.sh myinstance r5.large eu-west-1 mykey mysecuritygroup 64 myvolume vpc-1111111111111 subnet-1111111
 
 You can destroy the created resources on AWS console, using the Cloudformation service. 
