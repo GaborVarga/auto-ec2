@@ -5,7 +5,7 @@ What you will need:
 - an IAM user created in AWS
 - aws cli installed (https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)
 - running 'aws configure' with your access key id and access key and region (https://docs.aws.amazon.com/cli/latest/reference/configure/)
-- a key-pair file in .pem foramt which should be copied in the running directory
+- a key-pair file in .pem format which should be copied in the running directory
 - the id of the vpc and subnet where you want to put the instance
 
 How to run:
@@ -16,4 +16,4 @@ Example:
 
 ./createinstance myinstance r5.large eu-west-1 mykey mysecuritygroup 64 myvolume vpc-1111111111111 subnet-1111111
 
-You can desstroy the created resources on AWS console, using the Cloudformation service. 
+You can destroy the created resources on AWS console, using the Cloudformation service. 
