@@ -1,0 +1,57 @@
+Description: EC2 instance with storage (won't be deleted when instance is terminated) and with only ssh access.
+Resources:
+  MyInstance:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      InstanceType: r5.large
+      AvailabilityZone: eu-west-1a
+      SecurityGroupIds:
+        - !Ref MySecurityGroup
+      KeyName: CEPT-Testing
+      #ImageId: ami-0fad7378adf284ce0
+      ImageId: ami-0ffea00000f287d30
+      SubnetId: subnet-0efa4568
+      Tags:
+        - Key: Name
+          Value: mytest
+      UserData: !Base64 |
+        #!/bin/bash -xe
+        # This part is for mounting the attached volume.
+        # create mount point directory
+        mkdir /vol1
+        # create ext4 filesystem on new volume
+        mkfs -t ext4 /dev/xvdh
+        # add an entry to fstab to mount volume during boot
+        echo "/dev/xvdh    /vol1    ext4    defaults,nofail 0    2" >> /etc/fstab
+        # mount the volume on current boot
+        mount -a
+  MySecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupName: mytest-secgroup
+      GroupDescription: Enable SSH access via port 22
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: '22'
+          ToPort: '22'
+          CidrIp: 0.0.0.0/0
+      # Creating this SG in the specified VPC
+      VpcId: vpc-13180571
+  MyVolume:
+    Type: 'AWS::EC2::Volume'
+    Properties:
+      AutoEnableIO: false
+      AvailabilityZone: eu-west-1a
+      Encrypted: false
+      Size: 24
+      Tags:
+        - Key: Name
+          Value: myvol
+      VolumeType: gp2
+    DeletionPolicy: Retain
+  EC2VA1JXM7:
+    Type: 'AWS::EC2::VolumeAttachment'
+    Properties:
+      VolumeId: !Ref MyVolume
+      InstanceId: !Ref MyInstance
+      Device: /dev/xvdh
