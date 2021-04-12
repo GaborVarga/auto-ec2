@@ -3,6 +3,7 @@ This script creates an ec2 instance with an attached ebs using AWS Cloudformatio
 
 What you will need:
 - an IAM user created in AWS
+- aws cli installed (https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)
 - running 'aws configure' with your access key id and access key and region (https://docs.aws.amazon.com/cli/latest/reference/configure/)
 - a key-pair file in .pem foramt which should be copied in the running directory
 - the id of the vpc and subnet where you want to put the instance
